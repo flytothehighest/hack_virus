@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./part3.css" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+
+<body>
+    <script src="js/neutralino.js"></script>
+    <script src="/js/main.js"></script>
+    <div class="mask hidden"></div>
+    <div id="discount-mask" class="discount-mask hidden"></div>
+    <div id="discount-modal" class="discount-modal hidden">
+        <button id="modal-close-btn" class="modal-close-btn" title="关闭">×</button>
+        <h3 class="discount-title"><span class="youhui-titlePrice"></span>！</h3>
+        <div class="countdown-wrap">
+            <span></span>
+        </div>
+        <span id="countdown-num"></span>
+        <div class="qrcode-wrap">
+            <div class="yh-qrcode-display">
+                <div class="yh-qrcode-wrapper">
+                    <img src="./img/loding.png" alt="微信支付二维码" class="qrcode-img yh-wechat-code active">
+                    <div class="qrcode-timeout-overlay hidden" id="yh-wechat-timeout-overlay">
+                        <p class="timeout-text">二维码已超时</p>
+                        <button class="timeout-refresh-btn js-refresh-yh-qrcode">刷新二维码</button>
+                    </div>
+                </div>
+                <div class="yh-qrcode-wrapper">
+                    <img src="./img/loding.png" alt="支付宝支付二维码" class="qrcode-img yh-ali-code">
+                    <div class="qrcode-timeout-overlay hidden" id="yh-ali-timeout-overlay">
+                        <p class="timeout-text">二维码已超时</p>
+                        <button class="timeout-refresh-btn js-refresh-yh-qrcode">刷新二维码</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 查询订单弹窗 -->
+    <div class="order-query-modal hidden">
+        <div class="order-query-content">
+            <button class="order-back-btn">返回</button>
+            <div class="order-query-title">已付费订单查找</div>
+            <div class="order-query-form">
+                <input type="text" class="order-input" placeholder="请输入订单号/用户编号" />
+                <button class="order-submit-btn">查询订单</button>
+            </div>
+        </div>
+    </div>
+    <div id="scene2" class="scene active">
+        <div class="scene2-container">
+            <!-- 上半部分：背景图 + 图标 + 推荐栏（安装后显示） -->
+            <div class="scene2-top">
+                <!-- <img src="./img/psico.png" alt="" class="product-icon" id="product-icon"> -->
+                <!-- 右侧推荐栏（初始隐藏，安装后显示） -->
+                <div class="right-area hidden" id="scene2-recommend">
+                    <div class="side-recommend">
+                        <div class="recommend-title">
+                            <p>更多软件推荐</p>
+                            <span class="tag">价格五折优惠</span>
+                        </div>
+                        <ul class="game-list"></ul>
+                    </div>
+                </div>
+            </div>
+            <!-- 下半部分：白色区域 -->
+            <div class="scene2-bottom">
+                <!-- 初始状态：安装按钮 + 协议勾选 -->
+                <div class="install-area" id="install-area">
+                    <button id="install-btn" class="install-btn">立即安装</button>
+                    <label class="agreement-wrap" id="agreement-wrap">
+                        <input type="checkbox" id="agreement-checkbox" checked>
+                        <span class="checkmark">✓</span>
+                        <span class="agreement-text">是否同意安装协议<a href="javascript:void(0)" class="agreement-link"
+                                id="agreement-link">《游戏安装助手协议》</a></span>
+                    </label>
+                </div>
+                <!-- 内嵌进度条（初始隐藏，点击安装后显示） -->
+                <div class="progress-inline hidden" id="progress-inline">
+                    <div class="progress-inline-text" id="progress-inline-text">正在加载资源</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progress-bar-inline"></div>
+                    </div>
+                    <div class="progress-inline-percent" id="progress-inline-percent">0%</div>
+                </div>
+                <!-- 支付信息区（初始隐藏，进度条完成后显示） -->
+                <div class="pay-info-wrap hidden" id="pay-info-wrap">
+                    <div class="pay_info_top">
+                        <div class="pay-info-left">
+                            <div class="info-item">
+                                <span class="label">软件名称：</span>
+                                <span class="value" id="selected-version-name">illustrator</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">版本列表：</span>
+                                <select class="version-select" id="version-list">
+                                    <!-- 动态渲染 -->
+                                </select>
+                            </div>
+                            <div class="price-item">
+                                <span class="label">服务价格：</span>
+                                <span class="price" id="pay-price"></span>
+                                <span class="discount-tag">限时优惠</span>
+                                <span class="order-price">原价:</span>
+                                <span class="price-order" id="pay-price-original"></span>
+                            </div>
+                            <div class="gift-item">
+                                <span class="label">赠品：</span>
+                                <span class="gift-badge" id="gift-badge">一次付费，限时赠送该软件其它所有版本！</span>
+                            </div>
+                        </div>
+                        <div class="pay-info-right">
+                            <div class="qrcode-area">
+                                <!-- 微信二维码 -->
+                                <div class="qrcode-wrapper">
+                                    <img src="./img/loding.png" alt="微信支付二维码" class="qrcode-img wechat-code">
+                                    <div class="qrcode-timeout-overlay hidden" id="wechat-timeout-overlay">
+                                        <p class="timeout-text">二维码已超时</p>
+                                        <button class="timeout-refresh-btn js-refresh-qrcode">刷新二维码</button>
+                                    </div>
+                                </div>
+                                <!-- 支付宝二维码 -->
+                                <div class="qrcode-wrapper">
+                                    <img src="./img/loding.png" alt="支付宝支付二维码" class="qrcode-img ali-code">
+                                    <div class="qrcode-timeout-overlay hidden" id="ali-timeout-overlay">
+                                        <p class="timeout-text">二维码已超时</p>
+                                        <button class="timeout-refresh-btn js-refresh-qrcode">刷新二维码</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="pay-notice">购买后永久免费，不限电脑，不限安装次数</div>
+                        </div>
+                    </div>
+                    <div class="pay-info-bottom">
+                        <p>支付成功后自动跳转到安装界面，官方软件/永久使用/无广告/无弹窗，所收取的费用为服务器存储和高速宽带费用，畅快下载不限速。</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 查询订单按钮（初始隐藏，进度条完成后显示） -->
+            <div class="order-area hidden" id="order-area">
+                <button class="find-order-btn order-btn"><img src="./img/order-pay.png" alt="">查询订单</button>
+            </div>
+        </div>
+    </div>
+    <!-- 第三幕 -->
+    <div id="scene3" class="scene">
+        <div class="center">
+            <div class="container">
+                <p class="container_title">下载列表</p>
+                <div class="c-items">
+                    <div class="c-item">
+                    </div>
+                </div>
+                <div class="container_bottom">
+                    <div class="btn_left_group">
+                        <button class="bottom_btn" id="orderBtn">订单信息</button>
+                    </div>
+                    <button class="bottom_btn btn_single hidden" id="recommend"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="order-mask"></div>
+    <div class="order-modal">
+        <!-- 弹窗头部 高40px 带底边框 订单信息+用户编号 -->
+        <div class="order-header">
+            <h3>订单信息</h3>
+            <p>用户编号：USR20260119001</p>
+            <span class="close-modal">×</span>
+        </div>
+        <!-- 弹窗主体 table表格区域 -->
+        <div class="order-body">
+            <table class="order-table">
+                <thead>
+                    <tr>
+                        <th>订单编号</th>
+                        <th>购买产品</th>
+                        <th>购买日期</th>
+                        <th>支付价格</th>
+                        <th>支付方式</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        // 核心变量
+        const scene2 = document.getElementById('scene2');
+        const scene3 = document.getElementById('scene3');
+        const mask = document.querySelector('.mask');
+        // 内嵌进度条元素
+        const progressInline = document.getElementById('progress-inline');
+        const progressBarInline = document.getElementById('progress-bar-inline');
+        const progressInlineText = document.getElementById('progress-inline-text');
+        const progressInlinePercent = document.getElementById('progress-inline-percent');
+        const versionList = document.getElementById('version-list');
+        const installBtn = document.getElementById('install-btn');
+        const installArea = document.getElementById('install-area');
+        const payInfoWrap = document.getElementById('pay-info-wrap');
+        const selectedVersionName = document.getElementById('selected-version-name');
+        const agreementCheckbox = document.getElementById('agreement-checkbox');
+        const scene2Recommend = document.getElementById('scene2-recommend');
+        const orderArea = document.getElementById('order-area');
+        const payPriceEl = document.getElementById('pay-price');
+        const payPriceOriginalEl = document.getElementById('pay-price-original');
+        const orderQueryModal = document.querySelector('.order-query-modal');
+        const orderContent = document.querySelector('.order-query-content');
+        const orderBackBtn = document.querySelector('.order-back-btn');
+        const orderBtn = document.querySelector('.find-order-btn');
+        const wechatCode = document.querySelector('.wechat-code');
+        const aliCode = document.querySelector('.ali-code');
+        const payBtns = document.querySelectorAll('.pay-type-btn');
+        const yhwechatCode = document.querySelector('.yh-wechat-code');
+        const yhaliCode = document.querySelector('.yh-ali-code');
+
+        const payOrderBtn = document.getElementById('orderBtn');
+        const orderMask = document.querySelector('.order-mask');
+        const orderModal = document.querySelector('.order-modal');
+        const closeBtn = document.querySelector('.close-modal');
+        let hasShownDiscountPopup = false;
+        let countdownTimer = null;
+        let countdownTime = 10 * 60;
+        let productData = null;
+        let price_original = null
+        let price_sale = null
+        let price_discount = null;
+        let currentDiscountApplied = false;
+        window.downloadFileNames = {};       // fileId → 服务器真实文件名
+        window.isAnyDownloading = false;    // 全局下载锁
+        let category = null
+        //获取版本列表详情
+        async function getProductDetail() {
+            const config = await Neutralino.app.getConfig();
+            API_URL = config.globalVariables.API_URL;
+            GAME_NAME = config.globalVariables.GAME_NAME;
+            try {
+                const url = `${API_URL}/clientapi/products/detail?code=${GAME_NAME}&channel=${channelCode}`;
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                const result = await response.json();
+                console.log(result);
+
+                if (result.code === 1) {
+                    productData = result.data.product;
+                    const fileList = result.data.files;
+                    price_original = result.data.product.price_original;
+                    price_sale = result.data.product.price_sale;
+                    price_discount = result.data.product.price_discount ?? price_sale;
+                    console.log(price_sale, 244);
+                    const paramsObj = JSON.parse(result.data.product.params);
+                    // slogan.innerHTML = paramsObj.slogan
+                    category = result.data.product.category
+                    // centerNameOne.innerHTML = result.data.product.name
+                    // 渲染下拉框选项
+                    renderVersionSelect(fileList);
+                    return result.data;
+                } else {
+                    console.error("获取产品详情失败：", result.msg);
+                    return null;
+                }
+            } catch (error) {
+                console.error("接口请求异常：", error);
+                return null;
+            }
+        }
+        //获取推荐列表详情
+        async function getRecommendList() {
+            const config = await Neutralino.app.getConfig();
+            API_URL = config.globalVariables.API_URL;
+            GAME_NAME = config.globalVariables.GAME_NAME;
+            const rightArea = document.getElementById('scene2-recommend');
+
+            try {
+                // 提取当前产品的分类（从detail接口的product对象中获取）
+                const currentCategory = category
+
+                // 2. 构造推荐列表请求URL，带上category和默认的type=recommend
+                const url = new URL(`${API_URL}/clientapi/products/list`);
+                // 设置请求参数：category为当前产品分类，type默认recommend（推荐列表）
+                url.searchParams.set('category', currentCategory);
+                url.searchParams.set('type', 'recommend'); // 显式设置，也可省略（默认）
+
+                const response = await fetch(url.toString(), {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                const result = await response.json();
+                console.log("推荐列表接口返回：", result);
+
+                if (result.code === 1) {
+                    const gameArr = result.data || [];
+                    // 排序：按id升序
+                    const sortGameArr = gameArr.sort((a, b) => a.id - b.id);
+                    // 过滤：排除当前产品（GAME_NAME匹配code）
+                    const filterGameArr = sortGameArr.filter(item => item.code !== GAME_NAME);
+                    const gameListDom = document.querySelector('.game-list');
+
+                    if (!gameListDom) return;
+                    gameListDom.innerHTML = '';
+
+                    // 有推荐数据则显示右侧区域，否则隐藏
+                    // if (filterGameArr.length !== 0) {
+                    //     rightArea.style.display = "block";
+                    // } else {
+                    //     rightArea.style.display = "none";
+                    // }
+
+                    // 只取前10条数据渲染
+                    const limitGameArr = filterGameArr.slice(0, 10);
+                    limitGameArr.forEach(item => {
+                        const li = document.createElement('li');
+                        li.innerText = item.name;
+                        li.addEventListener('click', async () => {
+                            try {
+                                // 调用Neutralino.os.open打开落地页链接
+                                await Neutralino.os.open(item.land_url);
+                            } catch (error) {
+                                console.error('打开链接失败:', error, '产品名称:', item.name);
+                            }
+                        });
+                        li.style.cursor = 'pointer';
+                        gameListDom.appendChild(li);
+                    });
+
+                } else {
+                    console.error("获取推荐列表失败：", result.msg || result.info);
+                    rightArea.style.display = "none";
+                    return null;
+                }
+            } catch (error) {
+                console.error("推荐列表接口请求异常：", error);
+                rightArea.style.display = "none";
+                return null;
+            }
+        }
+        // 渲染版本下拉框
+        function renderVersionSelect(fileList) {
+            if (!fileList || fileList.length === 0) {
+                console.warn("文件列表为空，无法渲染下拉框");
+                return;
+            }
+            versionList.innerHTML = '';
+
+            // 遍历文件列表生成选项
+            fileList.forEach((file, index) => {
+                const option = document.createElement('option');
+                const displayName = file.file_name;
+                option.value = file.id;
+                option.textContent = displayName;
+                // 设置第一个选项为默认选中
+                if (index === 0) {
+                    option.selected = true;
+                    currentVersion = displayName;
+                    if (selectedVersionName) selectedVersionName.textContent = displayName;
+                }
+                versionList.appendChild(option);
+            });
+        }
+
+        // 计算优惠金额（单位：分）
+        // function calculateDiscountAmount(price) {
+        //     // 价格单位是分
+        //     if (price > 1500) { // 大于15元（1500分）
+        //         return price - 1000; // 减10元（1000分）
+        //     } else if (price > 1000 && price <= 1500) { // 大于10元且小于等于15元
+        //         return price - 500; // 减5元（500分）
+        //     } else {
+        //         return price; // 小于等于10元不减
+        //     }
+        // }
+
+        // 获取折扣描述文本
+        function getDiscountDescription(originalPrice, discountPrice) {
+
+            const discountPriceYuan = (discountPrice / 100).toFixed(2);
+            const originalPriceYuan = (originalPrice / 100).toFixed(2);
+            // 固定返回你要求的格式：原价<span>XX</span>现在下单只要<span>XX</span><br>
+            return `<span class="youhui-price">${discountPriceYuan}</span>`;
+        }
+
+        // 创建支付订单并获取二维码
+        async function createPayOrder(payType = 'wxpay', useDiscount = false) {
+            try {
+                // 校验必要参数
+                if (!savedUserNumber) {
+                    throw new Error("用户编号未获取，请重试");
+                }
+                if (!currentVersion) {
+                    throw new Error("未选择游戏版本");
+                }
+                if (!price_sale) {
+                    throw new Error("订单金额未获取");
+                }
+                if (!GAME_NAME) {
+                    throw new Error("来源标识码未配置");
+                }
+                if (!channelCode) {
+                    throw new Error("渠道编号未获取");
+                }
+
+                // 计算最终金额：如果使用优惠则使用优惠后的金额，否则使用原价
+                const finalAmount = useDiscount ? price_discount : price_sale;
+
+                const requestData = {
+                    user_number: savedUserNumber,
+                    name: currentVersion,
+                    pay_type: payType, // wxpay/alipay
+                    amount: finalAmount, // 使用优惠后的金额
+                    code: GAME_NAME,
+                    channel: channelCode // 转换为数字类型（接口要求integer）
+                };
+
+                console.log("创建支付订单请求参数：", requestData);
+
+                // 调用创建订单接口
+                const response = await fetch(`${API_URL}/clientapi/order/order_qrcode`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                const result = await response.json();
+                console.log("创建支付订单响应：", result);
+
+                if (result.code !== 1) {
+                    throw new Error(result.msg || "订单创建失败");
+                }
+
+                return {
+                    ...result.data,
+                    finalAmount: finalAmount // 返回最终金额用于显示
+                };
+            } catch (error) {
+                console.error("创建支付订单失败：", error.message);
+                return null;
+            }
+        }
+
+        // 检测是否应该显示优惠弹窗
+        function shouldShowDiscountPopup() {
+            try {
+                const scene2 = document.getElementById('scene2');
+                const payInfoWrap = document.getElementById('pay-info-wrap');
+                return scene2 &&
+                    scene2.classList.contains('active') &&
+                    payInfoWrap &&
+                    !payInfoWrap.classList.contains('hidden');
+            } catch (error) {
+                console.error("检测状态失败:", error);
+                return false;
+            }
+        }
+
+        // 格式化时间显示（原有逻辑不变）
+        function formatTime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            return `${hours.toString().padStart(2, '0')} ${minutes.toString().padStart(2, '0')} ${secs.toString().padStart(2, '0')}`;
+        }
+
+        // 启动倒计时（原有逻辑不变）
+        function startCountdown() {
+            const countdownElement = document.getElementById('countdown-num');
+            countdownTimer = setInterval(() => {
+                countdownTime--;
+                if (countdownElement) {
+                    countdownElement.textContent = formatTime(countdownTime);
+                }
+                if (countdownTime <= 0) {
+                    clearInterval(countdownTimer);
+                    console.log("倒计时结束，关闭优惠弹窗");
+                    hideDiscountPopup();
+                    countdownTime = 10 * 60;
+                    hasShownDiscountPopup = false;
+                }
+            }, 1000);
+        }
+
+        // 显示优惠弹窗（新增二维码请求逻辑）
+        function showDiscountPopup() {
+            try {
+                const discountMask = document.getElementById('discount-mask');
+                const discountModal = document.getElementById('discount-modal');
+                const countdownElement = document.getElementById('countdown-num');
+                const countdownWrap = document.querySelector('.countdown-wrap');
+                const discountTitle = document.querySelector('.discount-title');
+                if (discountMask && discountModal && countdownElement && countdownWrap) {
+                    const originalPrice = price_sale; // 原价 分
+                    const discountPrice = price_discount; // 优惠后价格 分
+
+                    // 2. 转换为元，用于页面展示
+                    const discountPriceYuan = (discountPrice / 100).toFixed(2);
+
+                    // 3. 获取格式化后的折扣文本（就是你要的原价+现价span格式）
+                    const discountDescription = getDiscountDescription(originalPrice, discountPrice);
+
+                    // 【修改标题】动态赋值 限时优惠+优惠后价格，替换原硬编码的19
+                    discountTitle.innerHTML = `<span class="youhui-titlePrice">${discountPriceYuan}</span>`;
+
+                    // 更新倒计时文本
+                    countdownWrap.innerHTML = `
+                    ${discountDescription}`;
+
+                    // 重置倒计时时间
+                    countdownTime = 30 * 60;
+                    countdownElement.textContent = formatTime(countdownTime);
+
+                    // 显示弹窗
+                    discountMask.classList.remove('hidden');
+                    discountModal.classList.remove('hidden');
+
+                    // 为优惠弹窗生成优惠后的二维码
+                    generateDiscountQRCodes();
+
+                    // 启动倒计时
+                    startCountdown();
+                } else {
+                    console.error("优惠弹窗元素未找到");
+                    Neutralino.app.exit();
+                }
+            } catch (error) {
+                console.error("显示优惠弹窗失败:", error);
+                Neutralino.app.exit();
+            }
+        }
+
+        // 为优惠弹窗生成优惠后的二维码
+        async function generateDiscountQRCodes() {
+            try {
+                // 获取优惠弹窗的二维码元素
+                const discountWechatCode = document.querySelector('.yh-wechat-code');
+                const discountAliCode = document.querySelector('.yh-ali-code');
+
+                if (!discountWechatCode || !discountAliCode) {
+                    console.error("优惠弹窗二维码元素未找到");
+                    return;
+                }
+
+                // 生成微信支付二维码（使用优惠）
+                const wechatOrderData = await createPayOrder('wxpay', true);
+                if (wechatOrderData && wechatOrderData.pay_qrcode) {
+                    discountWechatCode.src = wechatOrderData.pay_qrcode;
+                }
+
+                // 生成支付宝支付二维码（使用优惠）
+                const aliOrderData = await createPayOrder('alipay', true);
+                if (aliOrderData && aliOrderData.pay_qrcode) {
+                    discountAliCode.src = aliOrderData.pay_qrcode;
+                }
+
+                // 重置显示状态
+                discountWechatCode.style.display = 'block';
+                // discountAliCode.style.display = 'none';
+
+                // 重置按钮状态
+                const discountPayBtns = document.querySelectorAll('#discount-modal .pay-type-btn');
+                discountPayBtns.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.type === 'wechat') {
+                        btn.classList.add('active');
+                    }
+                });
+
+            } catch (error) {
+                console.error("生成优惠二维码失败:", error);
+            }
+        }
+
+        // 隐藏优惠弹窗（原有逻辑不变）
+        function hideDiscountPopup() {
+            const discountMask = document.getElementById('discount-mask');
+            const discountModal = document.getElementById('discount-modal');
+            if (discountMask && discountModal) {
+                discountMask.classList.add('hidden');
+                discountModal.classList.add('hidden');
+            }
+            if (countdownTimer) {
+                clearInterval(countdownTimer);
+                countdownTimer = null;
+            }
+            updateMainPay();
+        }
+        //更新原支付价格
+        async function updateMainPay() {
+            try {
+                const discountPriceYuan = (price_discount / 100).toFixed(2);
+
+                // 更新主支付页面的价格显示
+                if (payPriceEl) {
+                    payPriceEl.textContent = `¥${discountPriceYuan}`;
+                }
+
+                // 3. 更新主支付页面的二维码（使用优惠后的二维码）
+                const discountWechatCode = document.querySelector('.yh-wechat-code');
+                const discountAliCode = document.querySelector('.yh-ali-code');
+
+                if (discountWechatCode && discountWechatCode.src) {
+                    wechatCode.src = discountWechatCode.src;
+                }
+
+                if (discountAliCode && discountAliCode.src) {
+                    aliCode.src = discountAliCode.src;
+                }
+
+                // 4. 标记已应用优惠
+                currentDiscountApplied = true;
+
+                console.log("已更新主支付页面为优惠价格和二维码");
+            } catch (error) {
+                console.error("更新主支付页面失败:", error);
+            }
+        }
+
+        // 原有窗口关闭逻辑不变
+        Neutralino.events.on("windowClose", async () => {
+            try {
+                console.log("程序即将关闭，执行前置操作...");
+                const shouldShow = shouldShowDiscountPopup();
+                if (shouldShow) {
+                    if (!hasShownDiscountPopup) {
+                        console.log("在第二幕且支付信息区域已显示，第一次点击关闭，显示优惠弹窗");
+                        showDiscountPopup();
+                        hasShownDiscountPopup = true;
+                    } else {
+                        console.log("在第二幕且支付信息区域已显示，已经显示过优惠弹窗，直接退出程序");
+                        Neutralino.app.exit();
+                    }
+                } else {
+                    console.log("不在第二幕或支付信息区域未显示，直接退出程序");
+                    Neutralino.app.exit();
+                }
+            } catch (error) {
+                console.error("关闭前操作执行失败：", error);
+                Neutralino.app.exit();
+            }
+        });
+
+        // DOM加载完成后执行
+        document.addEventListener('DOMContentLoaded', async function () {
+            // 按钮始终可用，初始化等待移至进度条阶段
+
+            // DPI 缩放适配：高缩放下反向缩放内容，保持视觉一致
+            const designW = 1066, designH = 813;
+            const availableW = window.innerWidth;
+            const availableH = window.innerHeight;
+            if (availableW < designW || availableH < designH) {
+                document.documentElement.style.zoom = String(
+                    Math.min(availableW / designW, availableH / designH)
+                );
+            }
+            await getProductDetail();
+            await getRecommendList()
+
+            // 关闭优惠弹窗逻辑
+            const confirmCloseBtn = document.getElementById('modal-close-btn');
+            if (confirmCloseBtn) {
+                confirmCloseBtn.addEventListener('click', function () {
+                    console.log("用户点击确认关闭，退出程序");
+                    hideDiscountPopup();
+                });
+            }
+
+            // 支付方式切换逻辑（兼容主支付区域和优惠弹窗）
+
+
+            async function switchPayType(type, isDiscountModal = false) {
+                if (isDiscountModal) {
+                    // 优惠弹窗的支付方式切换（使用优惠金额）
+                    const discountWechatCode = document.querySelector('#discount-modal .yh-wechat-code');
+                    const discountAliCode = document.querySelector('#discount-modal .yh-ali-code');
+                    const discountPayBtns = document.querySelectorAll('#discount-modal .pay-type-btn');
+
+                    // if (type === 'wechat') {
+                    //     discountWechatCode.style.display = 'block';
+                    //     discountAliCode.style.display = 'none';
+                    // } else {
+                    //     discountWechatCode.style.display = 'none';
+                    //     discountAliCode.style.display = 'block';
+                    // }
+
+                    // discountPayBtns.forEach(btn => {
+                    //     btn.classList.remove('active');
+                    //     if (btn.dataset.type === type) {
+                    //         btn.classList.add('active');
+                    //     }
+                    // });
+                } else {
+                    // 主支付区域的支付方式切换（使用原价）
+                    if (type === 'wechat') {
+                        wechatCode.style.display = 'block';
+                        aliCode.style.display = 'none';
+                    } else {
+                        wechatCode.style.display = 'none';
+                        aliCode.style.display = 'block';
+                    }
+
+                    payBtns.forEach(btn => {
+                        btn.classList.remove('active');
+                        if (btn.dataset.type === type) {
+                            btn.classList.add('active');
+                        }
+                    });
+                }
+            }
+
+            // 为所有支付按钮绑定事件
+            payBtns.forEach(btn => {
+                btn.addEventListener('click', async function () {
+                    // 判断按钮是否在优惠弹窗内
+                    const isDiscountModal = this.closest('#discount-modal') !== null;
+                    await switchPayType(this.dataset.type, isDiscountModal);
+                });
+            });
+        });
+
+        // 显示订单查询弹窗
+        function showOrderModal() {
+            // 移除隐藏类，显示遮罩和弹窗
+            mask.classList.remove('hidden');
+            orderQueryModal.classList.remove('hidden');
+            // 重置弹窗动画状态
+            orderContent.classList.remove('close-animate');
+            const submitBtn = document.querySelector('.order-submit-btn');
+            submitBtn.removeEventListener('click', handleOrderQuery);
+            // 绑定查询按钮点击事件
+            submitBtn.addEventListener('click', handleOrderQuery);
+        }
+        // 用户输入订单查询核心逻辑
+        async function handleOrderQuery() {
+            const config = await Neutralino.app.getConfig();
+            GAME_NAME = config.globalVariables.GAME_NAME;
+            try {
+                const inputVal = document.querySelector('.order-input').value.trim();
+                const numberReg = /^\d+$/; // 纯数字正则
+
+                // 1. 空值校验
+                if (!inputVal) {
+                    await Neutralino.os.showMessageBox('提示', '请输入订单号/用户编号', 'OK', 'WARNING');
+                    return;
+                }
+
+                // 2. 长度+格式校验
+                let inputType = '';
+                if (inputVal.length === 19 && numberReg.test(inputVal)) {
+                    inputType = 'userNumber'; // 20位纯数字 → 用户编号
+                } else if (inputVal.length === 28 && numberReg.test(inputVal)) {
+                    inputType = 'tradeNo'; // 28位纯数字 → 订单号
+                    // 注：若queryOrder接口需要按订单号查询，需调整接口参数，当前先按用户编号逻辑兼容
+                } else {
+                    await Neutralino.os.showMessageBox(
+                        '格式错误',
+                        '订单号需为28位纯数字，用户编号需为20位纯数字',
+                        'OK',
+                        'ERROR'
+                    );
+                    return;
+                }
+
+                // 3. 校验通过，调用查询接口
+                console.log(`查询${inputType === 'userNumber' ? '用户编号' : '订单号'}：`, inputVal);
+                const result = await queryOrder(inputVal, GAME_NAME, 30);
+                console.log(result, "chax");
+
+
+                // 5. 订单存在/不存在处理
+                if (result.data.has_order) {
+                    // 5.1 获取接口返回的user_number，覆盖注册表userid
+                    const orderUserNumber = result.data.order_info.user_number;
+                    await regWrite("userid", orderUserNumber);
+                    console.log('注册表userid已覆盖为：', orderUserNumber);
+
+                    // 5.2 写入支付标识
+                    await isPaid();
+                    await getOrCreateUserNumber()
+                    // 5.3 隐藏查询弹窗，跳转到第三幕
+                    hideOrderModal();
+                    jumpToScene3();
+                } else {
+                    // 5.5 无订单提示
+                    await Neutralino.os.showMessageBox(
+                        '查询结果',
+                        '未查询到订单，请确认输入信息或完成支付',
+                        'OK',
+                        'INFO'
+                    );
+                }
+            } catch (error) {
+                console.error('订单查询处理异常：', error);
+                await Neutralino.os.showMessageBox(
+                    '系统错误',
+                    `订单处理失败：${error.message}`,
+                    'OK',
+                    'ERROR'
+                );
+            }
+        }
+        // 隐藏订单查询弹窗（带动画）
+        function hideOrderModal() {
+            // 添加收缩+透明动画
+            orderContent.classList.add('close-animate');
+
+            // 动画结束后隐藏元素
+            setTimeout(() => {
+                mask.classList.add('hidden');
+                orderQueryModal.classList.add('hidden');
+                // 重置动画类，方便下次显示
+                orderContent.classList.remove('close-animate');
+                // 清空输入框
+                document.querySelector('.order-input').value = '';
+            }, 300); // 动画时长与CSS的transition一致
+        }
+        // 原有订单按钮逻辑不变
+        orderBtn.addEventListener("click", () => {
+            showOrderModal()
+        })
+
+        orderBackBtn.addEventListener('click', () => {
+            hideOrderModal();
+        });
+
+        mask.addEventListener('click', (e) => {
+            if (e.target === mask) {
+                hideOrderModal();
+            }
+        });
+
+
+        // 防抖函数
+        function debounce(fn, delay = 500) {
+            let timer = null;
+            return function (...args) {
+                if (timer) return; // 在 delay 时间内再次点击则忽略
+                fn.apply(this, args);
+                timer = setTimeout(() => {
+                    timer = null; // delay 时间后允许再次点击
+                }, delay);
+            };
+        }
+        // 获取下载目录（放在用户 Downloads 下）
+        async function getDownloadDir() {
+            const homePath = await Neutralino.os.getPath('downloads');
+            const config = await Neutralino.app.getConfig();
+            const appName = config.globalVariables.GAME_NAME || 'photoshop';
+            const dir = `${homePath}\\${appName}`.replace(/\\/g, '\\\\');
+            try {
+                await Neutralino.filesystem.createDirectory(dir);
+            } catch (e) {
+                // 目录已存在则忽略
+            }
+            return dir.replace(/\\\\/g, '\\');
+        }
+
+        // 从下载 URL 末尾提取文件后缀，确保文件名带后缀
+        function ensureFileExtension(fileName, downloadUrl) {
+            if (fileName && fileName.includes('.') && /\.\w{2,5}$/.test(fileName)) return fileName;
+            try {
+                const urlObj = new URL(downloadUrl);
+                const pathname = urlObj.pathname;
+                const m = pathname.match(/\.([a-zA-Z0-9]{2,5})(?:[?#]|$)/);
+                if (m) return fileName + '.' + m[1];
+            } catch (e) { }
+            return fileName;
+        }
+
+        // 从下载 URL 提取真实文件名（比 Content-Disposition 更可靠）
+        function getFileNameFromUrl(downloadUrl) {
+            try {
+                const urlObj = new URL(downloadUrl);
+                const pathname = decodeURIComponent(urlObj.pathname);
+                const name = pathname.split('/').pop();
+                return name || '';
+            } catch (e) { return ''; }
+        }
+
+        // 零内存下载：<a> 直接下载 + 检测文件出现
+        async function downloadFileStream(fileId, filesList, onProgress, onComplete, onError) {
+            const files = filesList || (window.productDetailData ? window.productDetailData.files : []);
+            const file = files.find(item => item.id === Number(fileId));
+            if (!file || !file.download_url) {
+                if (onError) onError("未找到下载地址");
+                return;
+            }
+
+            // 从下载 URL 提取真实文件名
+            const serverFileName = getFileNameFromUrl(file.download_url) || ensureFileExtension(file.file_name, file.download_url);
+            const homePath = await Neutralino.os.getPath('downloads');
+
+            // 先检查网络可用性，防止 WebView 跳转到错误页
+            try {
+                const ctrl = new AbortController();
+                const timeoutId = setTimeout(() => ctrl.abort(), 5000);
+                const testResp = await fetch(file.download_url, { method: 'HEAD', signal: ctrl.signal }).finally(() => clearTimeout(timeoutId));
+                if (!testResp.ok) throw new Error('HTTP ' + testResp.status);
+            } catch (e) {
+                if (onError) onError("无法连接下载服务器，请检查网络");
+                return;
+            }
+
+            // 快照现有文件
+            const existingFiles = new Set();
+            try {
+                const entries = await Neutralino.filesystem.readDirectory(homePath);
+                entries.filter(e => e.type === 'FILE').forEach(e => existingFiles.add(e.entry));
+            } catch (e) { }
+
+            // <a> 直接下载（已验证网络可达）
+            const aTag = document.createElement('a');
+            aTag.href = file.download_url;
+            aTag.download = serverFileName;
+            aTag.style.display = 'none';
+            document.body.appendChild(aTag);
+            aTag.click();
+            document.body.removeChild(aTag);
+
+            // 轮询：检测 .crdownload 出现→消失 = 用户取消下载
+            const pollStart = Date.now();
+            let crdownloadSeen = false;
+            const result = await new Promise((resolve) => {
+                const poll = setInterval(async () => {
+                    try {
+                        const entries = await Neutralino.filesystem.readDirectory(homePath);
+                        const crdownload = entries.find(e =>
+                            e.type === 'FILE' && e.entry.endsWith('.crdownload') && !existingFiles.has(e.entry)
+                        );
+                        const finalFile = entries.find(e =>
+                            e.type === 'FILE' && e.entry === serverFileName
+                        );
+
+                        if (crdownload) crdownloadSeen = true;
+
+                        if (finalFile) {
+                            clearInterval(poll);
+                            resolve({ type: 'done', path: `${homePath}\\${finalFile.entry}` });
+                            return;
+                        }
+                        // .crdownload 曾出现但现已消失 → 用户取消了
+                        if (crdownloadSeen && !crdownload && !finalFile) {
+                            clearInterval(poll);
+                            resolve({ type: 'cancelled' });
+                            return;
+                        }
+                    } catch (e) { }
+                    if (Date.now() - pollStart > 600000) {
+                        clearInterval(poll);
+                        resolve({ type: 'timeout', path: `${homePath}\\${serverFileName}` });
+                    }
+                }, 1000);
+            });
+
+            if (result.type === 'cancelled') {
+                if (onError) onError("下载已取消");
+                return;
+            }
+            if (result.type === 'timeout') {
+                if (onError) onError("下载超时，请重试");
+                return;
+            }
+
+            // 记录服务器真实文件名（persist 到 localStorage，重启也能恢复）
+            window.downloadFileNames = window.downloadFileNames || {};
+            window.downloadFileNames[file.id] = serverFileName;
+            localStorage.setItem('dl_' + file.id, serverFileName);
+
+            if (onComplete) onComplete(`${homePath}\\${serverFileName}`);
+        }
+
+        let currentVersion = '';
+
+        // 协议链接点击事件
+        const agreementLink = document.getElementById('agreement-link');
+        if (agreementLink) {
+            agreementLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                Neutralino.os.open('https://www.223zy.com/pages/privacy');
+            });
+        }
+
+        // 版本选择逻辑（下拉框）- 适配接口数据
+        versionList.addEventListener('change', (e) => {
+            // 获取选中的option文本作为显示名称
+            currentVersion = e.target.options[e.target.selectedIndex].text;
+            // 实时更新选中版本显示（可选）
+            if (selectedVersionName) selectedVersionName.textContent = currentVersion;
+        });
+
+
+        // 等待支付所需的所有初始化变量就绪
+        function waitForPaymentInit() {
+            return new Promise((resolve) => {
+                const check = () => {
+                    if (savedUserNumber && channelCode && GAME_NAME && API_URL && currentVersion && price_sale) {
+                        resolve();
+                    } else {
+                        setTimeout(check, 100);
+                    }
+                };
+                check();
+            });
+        }
+
+        installBtn.addEventListener('click', async () => {
+            // 1. 校验协议勾选
+            if (!agreementCheckbox.checked) {
+                await Neutralino.os.showMessageBox('提示', '请先同意《游戏安装助手协议》', 'OK', 'WARNING');
+                return;
+            }
+
+            // 2. 隐藏安装按钮和协议区域，显示内嵌进度条
+            installArea.classList.add('hidden');
+            progressInline.classList.remove('hidden');
+
+            // 3. 等待初始化完成后生成微信和支付宝的二维码
+            (async () => {
+                try {
+                    // 等待所有依赖就绪
+                    await waitForPaymentInit();
+
+                    const wechatOrderData = await createPayOrder('wxpay', false);
+                    const aliOrderData = await createPayOrder('alipay', false);
+
+                    if (wechatOrderData && wechatOrderData.pay_qrcode) {
+                        wechatCode.src = wechatOrderData.pay_qrcode;
+                        if (payPriceEl) {
+                            const finalAmountYuan = (wechatOrderData.finalAmount / 100).toFixed(2);
+                            payPriceEl.textContent = `¥${finalAmountYuan}`;
+                        }
+                        if (payPriceOriginalEl) {
+                            const priceOriginal = (price_original / 100).toFixed(2);
+                            payPriceOriginalEl.textContent = `¥${priceOriginal}`;
+                        }
+                    }
+
+                    if (aliOrderData && aliOrderData.pay_qrcode) {
+                        aliCode.src = aliOrderData.pay_qrcode;
+                    }
+
+                    // 两个二维码同时显示
+                    wechatCode.style.display = 'block';
+                    aliCode.style.display = 'block';
+                } catch (error) {
+                    console.error('生成支付二维码失败:', error);
+                }
+            })();
+
+            // 4. 兜底获取选中版本
+            if (versionList.options.length > 0 && versionList.selectedIndex >= 0) {
+                currentVersion = versionList.options[versionList.selectedIndex].text;
+            }
+
+            // 5. 启动内嵌进度条
+            let progress = 0;
+            let isPaused = false;
+            const progressInterval = setInterval(() => {
+                if (isPaused) return;
+                progress += 1;
+                progressBarInline.style.width = `${progress}%`;
+                progressInlinePercent.textContent = `${progress}%`;
+                if (progress >= 0 && progress <= 20) {
+                    progressInlineText.textContent = '正在加载资源';
+                } else if (progress > 20 && progress <= 80) {
+                    progressInlineText.textContent = '正在下载配置';
+                } else if (progress > 80 && progress <= 100) {
+                    progressInlineText.textContent = '正在安装配置';
+                }
+                if (progress === 20 || progress === 80 || progress === 100) {
+                    isPaused = true;
+                    setTimeout(() => {
+                        isPaused = false;   // 0.5秒后恢复
+                    }, 500);
+                }
+                if (progress >= 100) {
+                    progress = 100;
+                    progressBarInline.style.width = '100%';
+                    progressInlinePercent.textContent = '100%';
+
+                    // 检查初始化是否完成，未完成则等待
+                    if (!savedUserNumber || !channelCode || !GAME_NAME || !API_URL || !currentVersion || !price_sale) {
+                        progressInlineText.textContent = '正在初始化...';
+                        return;
+                    }
+
+                    clearInterval(progressInterval);
+                    progressInline.classList.add('hidden');
+                    payInfoWrap.classList.remove('hidden');
+                    orderArea.classList.remove('hidden');
+                    scene2Recommend.classList.remove('hidden');
+                    if (selectedVersionName) selectedVersionName.textContent = currentVersion;
+                    if (typeof window.resetDiscountPopup !== 'undefined') {
+                        window.resetDiscountPopup();
+                    }
+                }
+            }, 50);
+        });
+
+        function jumpToScene3() {
+            // 1. 切换场景样式
+            scene2.classList.remove('active');
+            scene3.classList.add('active');
+            const body = document.body;
+            body.style.height = 'auto';
+            body.style.overflow = 'hidden';
+            // body.style.width = '800px';
+            body.style.backgroundImage = "none";
+            document.body.classList.add('no-bg-before');
+            body.style.margin = '0 auto';
+
+            // 2. 重置优惠弹窗状态
+            if (window.resetDiscountPopup) {
+                window.resetDiscountPopup();
+            }
+
+            // 3. 异步获取带下载地址的产品信息并渲染
+            (async () => {
+                const productData = await getProductDetailWithDownload();
+                if (!productData || !productData.files || productData.files.length === 0) {
+                    console.warn("无下载文件数据");
+                    return;
+                }
+                // 缓存产品数据到全局，方便下载函数调用
+                window.productDetailData = productData;
+
+                // 4. 扫描 Downloads 目录，检查哪些文件已下载
+                const homePath = await Neutralino.os.getPath('downloads');
+                console.log('[下载检查] Downloads 路径:', homePath);
+                let downloadedFiles = [];
+                try {
+                    const entries = await Neutralino.filesystem.readDirectory(homePath);
+                    downloadedFiles = entries.filter(e => e.type === 'FILE').map(e => e.entry);
+                    console.log('[下载检查] 已存在文件:', downloadedFiles);
+                } catch (e) { console.error('[下载检查] 读取目录失败:', e); }
+
+                // 5. 获取渲染容器并清空原有内容
+                const cItemsContainer = document.querySelector('#scene3 .c-items');
+                if (!cItemsContainer) return;
+                cItemsContainer.innerHTML = '';
+
+                // 6. 遍历接口返回的files数组，动态生成下载项
+                productData.files.forEach(file => {
+                    const fileNameWithoutExt = removeFileExtension(file.file_name); // 去掉后缀的文件名
+                    const fileSizeText = file.file_size; // 换算后的文件大小
+                    const imageUrl = file.image_url || './img/backImg.jpg'; // 图片兜底
+                    const safeFileName = getFileNameFromUrl(file.download_url) || ensureFileExtension(file.file_name, file.download_url);
+                    const checkName = localStorage.getItem('dl_' + file.id) || ((window.downloadFileNames || {})[file.id]) || safeFileName;
+                    const isDownloaded = downloadedFiles.includes(checkName);
+                    console.log(`[下载检查] URL文件名=${safeFileName}, 已下载=${isDownloaded}`);
+
+                    // 创建单个下载项DOM
+                    const cItem = document.createElement('div');
+                    cItem.className = 'c-item';
+                    cItem.innerHTML = `
+                <div class="c-i-left">
+                    <img src="${imageUrl}" alt="${fileNameWithoutExt}">
+                </div>
+                <div class="c-i-right">
+                    <p class="right-name">${fileNameWithoutExt}</p>
+                    <div class="c-i-r-box">
+                        <p style="margin-right: 0;">软件大小：${fileSizeText}</p>
+                    </div>
+                </div>
+                <button class="b-download${isDownloaded ? ' completed' : ''}" data-file-id="${file.id}">${isDownloaded ? '打开文件位置' : '立即下载'}</button>
+            `;
+
+                    // 7. 添加到容器中
+                    cItemsContainer.appendChild(cItem);
+
+                    // 8. 绑定下载按钮点击事件
+                    const downloadBtn = cItem.querySelector('.b-download');
+                    let isDownloading = false;
+
+                    // 防抖函数
+                    const debouncedDownload = debounce(async () => {
+                        if (isDownloading) return;
+                        if (window.isAnyDownloading) {
+                            await Neutralino.os.showMessageBox('提示', '当前已有文件正在下载，请等待完成后再试', 'OK', 'INFO');
+                            return;
+                        }
+                        window.isAnyDownloading = true;
+                        isDownloading = true;
+
+                        // 进入下载状态
+                        downloadBtn.disabled = true;
+                        downloadBtn.classList.remove('completed', 'error');
+                        downloadBtn.classList.add('downloading');
+                        downloadBtn.textContent = '正在下载...';
+
+                        downloadFileStream(
+                            file.id,
+                            productData.files,
+                            null, // 不再显示进度
+                            (savePath) => {
+                                downloadBtn.disabled = false;
+                                downloadBtn.classList.remove('downloading');
+                                downloadBtn.classList.add('completed');
+                                downloadBtn.textContent = '打开文件位置';
+                                isDownloading = false;
+                                window.isAnyDownloading = false;
+                            },
+                            (errMsg) => {
+                                downloadBtn.disabled = false;
+                                downloadBtn.classList.remove('downloading');
+                                downloadBtn.classList.add('error');
+                                downloadBtn.textContent = '下载失败，点击重试';
+                                isDownloading = false;
+                                window.isAnyDownloading = false;
+
+                            }
+                        );
+                    }, 3000);
+
+                    downloadBtn.addEventListener('click', function (e) {
+                        if (this.classList.contains('completed')) {
+                            Neutralino.os.getPath('downloads').then(homePath => {
+                                Neutralino.os.execCommand(`start "" "${homePath}"`);
+                            }).catch(() => { });
+                            return;
+                        }
+                        if (this.classList.contains('downloading')) return;
+                        // 错误态：允许重试
+                        debouncedDownload();
+                    });
+                });
+
+                // 每 3 秒扫描一次 Downloads，检测新下载完成的文件
+                setInterval(async () => {
+                    try {
+                        const entries = await Neutralino.filesystem.readDirectory(homePath);
+                        const fileNames = entries.filter(e => e.type === 'FILE').map(e => e.entry);
+                        const items = cItemsContainer.querySelectorAll('.c-item');
+                        items.forEach(item => {
+                            const btn = item.querySelector('.b-download');
+                            // 跳过正在下载的
+                            if (btn.classList.contains('downloading')) return;
+                            const fileId = btn.dataset.fileId;
+                            const file = productData.files.find(f => String(f.id) === fileId);
+                            if (!file) return;
+                            const safeName = localStorage.getItem('dl_' + file.id) || ((window.downloadFileNames || {})[file.id]) || getFileNameFromUrl(file.download_url) || ensureFileExtension(file.file_name, file.download_url);
+                            if (fileNames.includes(safeName)) {
+                                if (!btn.classList.contains('completed')) {
+                                    btn.classList.add('completed');
+                                    btn.textContent = '打开文件位置';
+                                    btn.disabled = false;
+                                }
+                            } else {
+                                if (btn.classList.contains('completed')) {
+                                    btn.classList.remove('completed');
+                                    btn.textContent = '立即下载';
+                                }
+                            }
+                        });
+                    } catch (e) { /* 忽略 */ }
+                }, 3000);
+            })();
+
+            console.log("已成功跳转到第三幕并完成动态渲染");
+        }
+        window.jumpToScene3 = jumpToScene3;
+
+        // 重置优惠弹窗逻辑（原有逻辑不变）
+        window.resetDiscountPopup = function () {
+            if (typeof hasShownDiscountPopup !== 'undefined') {
+                hasShownDiscountPopup = false;
+            }
+            const discountMask = document.getElementById('discount-mask');
+            const discountModal = document.getElementById('discount-modal');
+            if (discountMask && discountModal && !discountMask.classList.contains('hidden')) {
+                discountMask.classList.add('hidden');
+                discountModal.classList.add('hidden');
+                if (countdownTimer) {
+                    clearInterval(countdownTimer);
+                    countdownTimer = null;
+                }
+            }
+        };
+
+
+
+        // 移除文件名后缀（如 game.exe → game）
+        function removeFileExtension(fileName) {
+            if (!fileName) return '';
+            return fileName.replace(/\.[^/.]+$/, ""); // 匹配最后一个.后的内容并移除
+        }
+        // 获取带下载地址的产品完整信息（授权后专用）
+        async function getProductDetailWithDownload() {
+            const config = await Neutralino.app.getConfig();
+            const API_URL = config.globalVariables.API_URL;
+            const GAME_NAME = config.globalVariables.GAME_NAME;
+            try {
+                const url = `${API_URL}/clientapi/products/detail?code=${GAME_NAME}&with_download=1&channel=${channelCode}`;
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                const result = await response.json();
+                console.log("带下载地址的产品详情：", result);
+
+                if (result.code === 1) {
+                    const { btns } = result.data;
+                    if (!btns || !btns.length) return result.data;
+
+                    const btnLeftGroup = document.querySelector('.btn_left_group');
+                    const btnSingle = document.querySelector('#recommend');
+                    if (!btnLeftGroup || !btnSingle) return result.data;
+
+                    // 清除旧按钮（保留 orderBtn）
+                    btnLeftGroup.querySelectorAll('.bottom_btn:not(#orderBtn)').forEach(b => b.remove());
+                    btnSingle.classList.add('hidden');
+                    btnSingle.onclick = null;
+
+                    // 最后一个 btn → btn_single，其余的 → btn_left_group
+                    const leftBtns = btns.slice(0, -1);
+                    const lastBtn = btns[btns.length - 1];
+
+                    leftBtns.forEach(item => {
+                        const btn = document.createElement('button');
+                        btn.className = 'bottom_btn';
+                        btn.textContent = item.name;
+                        btn.onclick = () => Neutralino.os.open(item.url);
+                        btnLeftGroup.appendChild(btn);
+                    });
+
+                    btnSingle.textContent = lastBtn.name;
+                    btnSingle.classList.remove('hidden');
+                    btnSingle.onclick = () => Neutralino.os.open(lastBtn.url);
+
+                    return result.data;
+                } else {
+                    console.error("获取带下载地址的产品详情失败：", result.msg);
+                    return null;
+                }
+            } catch (error) {
+                console.error("获取带下载地址的产品详情异常：", error);
+                return null;
+            }
+        }
+
+
+
+        // 显示支付订单弹窗的方法
+        async function showModal() {
+            orderMask.style.display = 'block';
+            orderModal.style.display = 'block';
+
+            const config = await Neutralino.app.getConfig();
+            API_URL = config.globalVariables.API_URL;
+            GAME_NAME = config.globalVariables.GAME_NAME;
+            if (!savedUserNumber || !GAME_NAME) {
+                console.warn("无法启动订单轮询：用户编号或游戏名称未获取");
+                return;
+            } else {
+                const result = await queryOrder(savedUserNumber, GAME_NAME, days = 30)
+                console.log(result, 2388);
+                const tbody = document.querySelector('.order-table tbody');
+                const userCodeP = document.querySelector('.order-header p')
+                userCodeP.innerText = `用户编号：${savedUserNumber}`;
+                tbody.innerHTML = '';
+
+                // 2. 支付方式映射（后端返回英文，页面展示中文，后续加支付方式直接在这里加即可）
+                const payTypeMap = {
+                    wxpay: '微信支付',
+                    alipay: '支付宝',
+                };
+
+                // 3. 接口请求成功 且 有订单数据时渲染
+                if (result.code === 1 && result.data?.has_order) {
+                    const order = result.data.order_info;
+                    // 创建表格行
+                    const tr = document.createElement('tr');
+                    // 拼接单元格，严格对应表头：订单编号、购买产品、购买日期、支付价格、支付方式
+                    tr.innerHTML = `
+                <td>${order.trade_no || '-'}</td>
+                <td>${order.name || '-'}</td>
+                <td>${order.callback_time || '-'}</td>
+                <td>¥${order.amount || '0.00'}</td>
+                <td>${payTypeMap[order.pay_type] || payTypeMap.other}</td>
+            `;
+                    // 把行追加到tbody中
+                    tbody.appendChild(tr);
+                } else {
+                    // 无订单时，渲染空占位行，colspan=5 占满所有列，保证表格样式不乱
+                    const emptyTr = document.createElement('tr');
+                    emptyTr.innerHTML = `<td colspan="5" style="text-align:center;">暂无订单记录</td>`;
+                    tbody.appendChild(emptyTr);
+                }
+            }
+        }
+
+        // 隐藏支付订单弹窗的方法
+        function hideModal() {
+            orderMask.style.display = 'none';
+            orderModal.style.display = 'none';
+        }
+
+        // 绑定点击事件
+        payOrderBtn.addEventListener('click', showModal);
+        closeBtn.addEventListener('click', hideModal);
+
+
+        // ==================== 二维码超时遮罩 ====================
+        const wechatTimeoutOverlay = document.getElementById('wechat-timeout-overlay');
+        const aliTimeoutOverlay = document.getElementById('ali-timeout-overlay');
+        const yhWechatTimeoutOverlay = document.getElementById('yh-wechat-timeout-overlay');
+        const yhAliTimeoutOverlay = document.getElementById('yh-ali-timeout-overlay');
+
+        // 显示超时遮罩（由 main.js 的轮询超时触发）
+        window.showQrcodeTimeout = function () {
+            if (wechatTimeoutOverlay) wechatTimeoutOverlay.classList.remove('hidden');
+            if (aliTimeoutOverlay) aliTimeoutOverlay.classList.remove('hidden');
+            if (yhWechatTimeoutOverlay) yhWechatTimeoutOverlay.classList.remove('hidden');
+            if (yhAliTimeoutOverlay) yhAliTimeoutOverlay.classList.remove('hidden');
+        };
+
+        // 隐藏超时遮罩
+        window.hideQrcodeTimeout = function () {
+            if (wechatTimeoutOverlay) wechatTimeoutOverlay.classList.add('hidden');
+            if (aliTimeoutOverlay) aliTimeoutOverlay.classList.add('hidden');
+            if (yhWechatTimeoutOverlay) yhWechatTimeoutOverlay.classList.add('hidden');
+            if (yhAliTimeoutOverlay) yhAliTimeoutOverlay.classList.add('hidden');
+        };
+
+        // ========== 主页面刷新按钮 ==========
+        const mainRefreshBtns = document.querySelectorAll('.js-refresh-qrcode');
+        mainRefreshBtns.forEach(btn => {
+            btn.addEventListener('click', async () => {
+                mainRefreshBtns.forEach(b => { b.disabled = true; b.textContent = '检查中...'; });
+                try {
+                    const res = await queryOrder(savedUserNumber, GAME_NAME);
+                    if (res?.code === 1 && res.data?.has_order) {
+                        await markPaid();
+                        window.jumpToScene3?.();
+                        return;
+                    }
+                    wechatCode.src = './img/loding.png';
+                    aliCode.src = './img/loding.png';
+                    const [wechatOrderData, aliOrderData] = await Promise.all([
+                        createPayOrder('wxpay', false),
+                        createPayOrder('alipay', false)
+                    ]);
+                    if (wechatOrderData?.pay_qrcode) wechatCode.src = wechatOrderData.pay_qrcode;
+                    if (aliOrderData?.pay_qrcode) aliCode.src = aliOrderData.pay_qrcode;
+                    window.hideQrcodeTimeout();
+                    startOrderPolling();
+                } catch (e) {
+                    console.error('刷新二维码失败:', e);
+                    await Neutralino.os.showMessageBox('错误', '刷新二维码失败，请重试', 'OK', 'ERROR');
+                } finally {
+                    mainRefreshBtns.forEach(b => { b.disabled = false; b.textContent = '刷新二维码'; });
+                }
+            });
+        });
+
+        // ========== 优惠弹窗刷新按钮 ==========
+        const yhRefreshBtns = document.querySelectorAll('.js-refresh-yh-qrcode');
+        yhRefreshBtns.forEach(btn => {
+            btn.addEventListener('click', async () => {
+                yhRefreshBtns.forEach(b => { b.disabled = true; b.textContent = '检查中...'; });
+                try {
+                    const res = await queryOrder(savedUserNumber, GAME_NAME);
+                    if (res?.code === 1 && res.data?.has_order) {
+                        await markPaid();
+                        window.jumpToScene3?.();
+                        return;
+                    }
+                    yhwechatCode.src = './img/loding.png';
+                    yhaliCode.src = './img/loding.png';
+                    const [wechatOrderData, aliOrderData] = await Promise.all([
+                        createPayOrder('wxpay', true),
+                        createPayOrder('alipay', true)
+                    ]);
+                    if (wechatOrderData?.pay_qrcode) yhwechatCode.src = wechatOrderData.pay_qrcode;
+                    if (aliOrderData?.pay_qrcode) yhaliCode.src = aliOrderData.pay_qrcode;
+                    window.hideQrcodeTimeout();
+                    startOrderPolling();
+                } catch (e) {
+                    console.error('刷新优惠二维码失败:', e);
+                    await Neutralino.os.showMessageBox('错误', '刷新二维码失败，请重试', 'OK', 'ERROR');
+                } finally {
+                    yhRefreshBtns.forEach(b => { b.disabled = false; b.textContent = '刷新二维码'; });
+                }
+            });
+        });
+
+        // 禁用右键菜单（原有逻辑不变）
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'F5' || (e.ctrlKey && e.key === 'r')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+
+</html>
