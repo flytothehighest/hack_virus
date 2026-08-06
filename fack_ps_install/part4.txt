@@ -1,0 +1,64 @@
+{"files":{"neutralino.config.json":{"size":1370,"offset":"0","integrity":{"algorithm":"SHA256","hash":"cb1334bb5a2029cd55e5a3cd78a7332dbdd02b50676f1e1b928a55cc15b9902d","blockSize":4194304,"blocks":["cb1334bb5a2029cd55e5a3cd78a7332dbdd02b50676f1e1b928a55cc15b9902d"]}},"resources":{"files":{"icons":{"files":{}},"img":{"files":{"ali.png":{"size":1027,"offset":"1370","integrity":{"algorithm":"SHA256","hash":"d45eaaa57e492bc6c7d3f6134cb043983217ab761b3a8e812ee6142b6c36d7c2","blockSize":4194304,"blocks":["d45eaaa57e492bc6c7d3f6134cb043983217ab761b3a8e812ee6142b6c36d7c2"]}},"backImg.jpg":{"size":103406,"offset":"2397","integrity":{"algorithm":"SHA256","hash":"b77b487c97a409090a6637bf481ec33822ede94bb0f1e119740e25bc3e0be612","blockSize":4194304,"blocks":["b77b487c97a409090a6637bf481ec33822ede94bb0f1e119740e25bc3e0be612"]}},"bg_t.png":{"size":117244,"offset":"105803","integrity":{"algorithm":"SHA256","hash":"4ae71d9ac5c258ba06a50fb11bd5ced58d2560d12e82905983f912d7ed61cd42","blockSize":4194304,"blocks":["4ae71d9ac5c258ba06a50fb11bd5ced58d2560d12e82905983f912d7ed61cd42"]}},"discount.png":{"size":160380,"offset":"223047","integrity":{"algorithm":"SHA256","hash":"405d83fd144e67d056e47683c21ff4f89e9b4dc43cd95ecf47505a79f7d72ca3","blockSize":4194304,"blocks":["405d83fd144e67d056e47683c21ff4f89e9b4dc43cd95ecf47505a79f7d72ca3"]}},"download_ico.png":{"size":3967,"offset":"383427","integrity":{"algorithm":"SHA256","hash":"26ab9844fa33b44d747dc50c8b707bec885b5f11370bdff0c9a87e0ffb2799de","blockSize":4194304,"blocks":["26ab9844fa33b44d747dc50c8b707bec885b5f11370bdff0c9a87e0ffb2799de"]}},"loding.png":{"size":5816,"offset":"387394","integrity":{"algorithm":"SHA256","hash":"e64298cb82cb8f4d92f825083b45fba7a890326db1fcb9c37e77cdf65c4d575e","blockSize":4194304,"blocks":["e64298cb82cb8f4d92f825083b45fba7a890326db1fcb9c37e77cdf65c4d575e"]}},"order-my.png":{"size":536,"offset":"393210","integrity":{"algorithm":"SHA256","hash":"36c297ba882051b390b8bc317906ffa53497e32d9618d770502ffe354ba06bb9","blockSize":4194304,"blocks":["36c297ba882051b390b8bc317906ffa53497e32d9618d770502ffe354ba06bb9"]}},"order-pay.png":{"size":681,"offset":"393746","integrity":{"algorithm":"SHA256","hash":"507671d89f0fccbbfde90bc77cd13a0f87dca0b6fa31cc4fcbaaa0dc49d79567","blockSize":4194304,"blocks":["507671d89f0fccbbfde90bc77cd13a0f87dca0b6fa31cc4fcbaaa0dc49d79567"]}},"psico.png":{"size":1923,"offset":"394427","integrity":{"algorithm":"SHA256","hash":"62138f8b9f31c2b5fad0ed600f5c1d899339b04d78179ce953653a46fb9be2e1","blockSize":4194304,"blocks":["62138f8b9f31c2b5fad0ed600f5c1d899339b04d78179ce953653a46fb9be2e1"]}},"wechat.png":{"size":944,"offset":"396350","integrity":{"algorithm":"SHA256","hash":"7a6e204098fd089fbd45048b128a3284242019c2431c0a77c8dc2f202fdb0306","blockSize":4194304,"blocks":["7a6e204098fd089fbd45048b128a3284242019c2431c0a77c8dc2f202fdb0306"]}}}},"index.html":{"size":71561,"offset":"397294","integrity":{"algorithm":"SHA256","hash":"b41d335f16b3c6c159ee4b4bcf92f10a5b3bfa121ca59cb3b1409f54189a89c2","blockSize":4194304,"blocks":["b41d335f16b3c6c159ee4b4bcf92f10a5b3bfa121ca59cb3b1409f54189a89c2"]}},"js":{"files":{"index.js":{"size":0,"offset":"468855","integrity":{"algorithm":"SHA256","hash":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","blockSize":4194304,"blocks":["e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"]}},"main.js":{"size":7404,"offset":"468855","integrity":{"algorithm":"SHA256","hash":"6e733937a300dc25863a497addcfbe63f0a64e1f90d7aa7457a0c6209d2eebce","blockSize":4194304,"blocks":["6e733937a300dc25863a497addcfbe63f0a64e1f90d7aa7457a0c6209d2eebce"]}},"neutralino.d.ts":{"size":17911,"offset":"476259","integrity":{"algorithm":"SHA256","hash":"81040ba37963614b2265cfd8ea64492fa65f3a48e29ec3710007f57b3a4bed77","blockSize":4194304,"blocks":["81040ba37963614b2265cfd8ea64492fa65f3a48e29ec3710007f57b3a4bed77"]}},"neutralino.js":{"size":15967,"offset":"494170","integrity":{"algorithm":"SHA256","hash":"70e3cbb8eda2452d1a7625b6d35045074acc8d2fe607786868fd8e7a4ae91dbc","blockSize":4194304,"blocks":["70e3cbb8eda2452d1a7625b6d35045074acc8d2fe607786868fd8e7a4ae91dbc"]}}}},"order.html":{"size":11092,"offset":"510137","integrity":{"algorithm":"SHA256","hash":"0e6e20a650210ce0e63c18e855a04c5689e7eda91e5f5bfe9b38e3422cc60504","blockSize":4194304,"blocks":["0e6e20a650210ce0e63c18e855a04c5689e7eda91e5f5bfe9b38e3422cc60504"]}},"styles.css":{"size":39252,"offset":"521229","integrity":{"algorithm":"SHA256","hash":"8ba1ac15044166da11934a8b79dd77474795a6afa65e47f4fb5135b131216b80","blockSize":4194304,"blocks":["8ba1ac15044166da11934a8b79dd77474795a6afa65e47f4fb5135b131216b80"]}}}}}}
+
+{
+  "applicationId": "neuGameSoft",
+  "version": "1.0.0",
+  "defaultMode": "window",
+  "port": 0,
+  "documentRoot": "/resources/",
+  "url": "/",
+  "bundleResources": true,
+  "enableServer": true,
+  "enableNativeAPI": true,
+  "tokenSecurity": "one-time",
+  "applicationName": "Photoshop",
+  "storageLocation": "system",
+  "logging": {
+    "enabled": false,
+    "writeToLogFile": false
+  },
+  "permissions": {
+    "allowCommandExecution": true,
+    "allowNeutralinojsEval": false
+  },
+  "nativeAllowList": [
+    "app.*",
+    "os.*",
+    "window.*",
+    "filesystem.*"
+  ],
+  "filesystemAllowList": [
+    ".*"
+  ],
+  "globalVariables": {
+    "API_URL": "https://api.223zy.com",
+    "GAME_NAME": "ps"
+  },
+  "modes": {
+    "window": {
+      "title": "Photoshop",
+      "width": 1066,
+      "height": 813,
+      "minWidth": 600,
+      "minHeight": 500,
+      "fullScreen": false,
+      "alwaysOnTop": false,
+      "icon": "/resources/img/psico.png",
+      "enableInspector": true,
+      "openInspectorOnStartup": false,
+      "borderless": false,
+      "maximize": false,
+      "hidden": false,
+      "resizable": false,
+      "exitProcessOnClose": false,
+      "center": true,
+      "useSavedState": false
+    }
+  },
+  "cli": {
+    "binaryName": "Photoshop",
+    "resourcesPath": "/resources",
+    "clientLibrary": "/resources/js/main.js",
+    "binaryVersion": "6.3.0"
+  }
+}
